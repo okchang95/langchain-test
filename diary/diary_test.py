@@ -9,7 +9,7 @@ import json
 import os
 import sys
 from tqdm import tqdm
-from prompt_templates import template1, template2
+from prompts.prompt_templates import template1, template2
 
 load_dotenv()  # API KEY 정보로드
 logging.langsmith("langsmith-test-0829")  # 프로젝트 이름 입력
@@ -22,9 +22,11 @@ logging.langsmith("langsmith-test-0829")  # 프로젝트 이름 입력
 # input_file = f"{inputfilename}"
 
 files = os.listdir("samples")
-for input_file in tqdm(
-    files,
-    desc="Processing files",
+for idx, input_file in enumerate(
+    tqdm(
+        files,
+        desc="Processing files",
+    )
 ):
     print(f"{input_file} is in progress........")
     with open("data.json", "r", encoding="utf-8") as f:
@@ -58,13 +60,21 @@ for input_file in tqdm(
         f"results/{input_file.split('.')[0]}_result.txt", "w", encoding="utf-8"
     ) as f:
         f.write(result)
+
     # print()
     # print(f"==========================INPUT==========================")
     # print(input_sample)
     # print()
-    # print(f"==========================OUTPUT==========================")
+    # print(f"==========================OUTPUT1==========================")
+    # print(translated)
+    # print()
+    # # print(f"==========================OUTPUT1==========================")
+    # # print(summarized)
+    # # print()
+    # print(f"==========================OUTPUT2==========================")
     # print(result)
-
+    # if idx == 1:
+    #     break
 # for token in chain.stream({"diary": translated}):
 #     # 스트림에서 받은 데이터의 내용을 출력합니다. 줄바꿈 없이 이어서 출력하고, 버퍼를 즉시 비웁니다.
 #     print(token, end="", flush=True)
